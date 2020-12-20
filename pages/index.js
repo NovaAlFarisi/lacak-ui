@@ -1,7 +1,5 @@
 import Head from 'next/head'
 import dynamic from 'next/dynamic';
-import NavBar from '../components/NavBar';
-import Container from '../components/Container';
 export default function Home() {
   const MapWithNoSSR = dynamic(()=> import('../components/Map'),{
     ssr: false
