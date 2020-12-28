@@ -1,12 +1,15 @@
 import Head from 'next/head'
 import dynamic from 'next/dynamic';
 import {PositionContext} from '../store/positionStore'
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import sampleData from '../sample.json'
 import { observer } from 'mobx-react';
 import Device from '../components/Device';
 const Home = observer(() => {
   const position = useContext(PositionContext)
+
+  const [expandPanel, setExpandPanel] = useState(true);
+
   const MapWithNoSSR = dynamic(()=> import('../components/Map'),{
     ssr: false
   });
@@ -15,10 +18,14 @@ const Home = observer(() => {
     position.selectData(id)
   }
 
+  const handleExpandPanel = () => {
+    setExpandPanel(!expandPanel)
+  }
+
   useEffect(()=>{
     position.addPosition(sampleData)
   },[position])
-  
+console.log(expandPanel)
   return (
     <div>
       <Head>
@@ -60,7 +67,7 @@ const Home = observer(() => {
                         </svg>
                       </a>
                   </div>
-                  <div className="py-3 px-5 flex flex-row justify-between">
+                  <div className="relative py-3 px-5 flex flex-row justify-between">
                       <div></div>
                       <h1 className="font-bold">Unit Location</h1>
                       <button>
@@ -68,8 +75,20 @@ const Home = observer(() => {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                       </button>
+                      
+                      <button onClick={()=>handleExpandPanel()} className="absolute bg-white rounded-full -bottom-5 left-1/2 -ml-5">
+                        {!expandPanel ? (
+                          <svg className="h-7 w-7 text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 13l-7 7-7-7m14-8l-7 7-7-7" />
+                          </svg>
+                        ) : (
+                          <svg  className="h-7 w-7 text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 11l7-7 7 7M5 19l7-7 7 7" />
+                          </svg>
+                        )}
+                      </button>
                   </div>
-                  <div className="py-3 px-5 bg-gray-100 h-40 md:h-80 overflow-y-scroll space-y-2">
+                  <div className={"py-5 px-5 bg-gray-100 md:h-80 overflow-y-scroll space-y-2 h-40 transition-all " + (!expandPanel ? "visible" : "hidden")}>
                       {position ? (
                         position.data.map((val,i)=>(
                           <Device handleClick={handleClickDevice} key={i} data={val}/>
