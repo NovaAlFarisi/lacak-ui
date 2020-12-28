@@ -10,10 +10,15 @@ const Home = observer(() => {
   const MapWithNoSSR = dynamic(()=> import('../components/Map'),{
     ssr: false
   });
+
+  const handleClickDevice = (id) => {
+    position.selectData(id)
+  }
+
   useEffect(()=>{
     position.addPosition(sampleData)
   },[position])
-
+  
   return (
     <div>
       <Head>
@@ -67,7 +72,7 @@ const Home = observer(() => {
                   <div className="py-3 px-5 bg-gray-100 h-40 md:h-80 overflow-y-scroll space-y-2">
                       {position ? (
                         position.data.map((val,i)=>(
-                          <Device key={i} data={val}/>
+                          <Device handleClick={handleClickDevice} key={i} data={val}/>
                         ))
                       ) : 'No Device'}
                   </div>

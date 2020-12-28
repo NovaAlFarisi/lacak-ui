@@ -1,5 +1,6 @@
 [
     {
+        "id":1,
         "type": "truck",
         "serial": "A 4555 L",
         "name":"Truck Fuso",
@@ -9,6 +10,7 @@
             "lng":106.822383
         }
     },{
+        "id":2,
         "type": "sedan",
         "serial": "A 4222 S",
         "name":"Civic",
@@ -18,6 +20,7 @@
             "lng":106.822383
         }
     },{
+        "id":3,
         "type": "minibus",
         "serial": "A 4512 L",
         "name":"Grandmax",

@@ -1,12 +1,15 @@
-import { MapContainer, TileLayer,Marker,Popup, ZoomControl} from 'react-leaflet';
+import { MapContainer, TileLayer,Marker,Popup, ZoomControl, useMap} from 'react-leaflet';
 import ReactDOMServer from 'react-dom/server';
 import Leaflet from 'leaflet';
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-defaulticon-compatibility";
 import {PositionContext} from '../store/positionStore'
-import { useContext } from 'react';
-const Map = () => {
+import { useContext, useEffect, useState } from 'react';
+import { observer } from 'mobx-react';
+const Map = observer(() => {
+
+  const position = useContext(PositionContext);
   const icon = ReactDOMServer.renderToString(
     <svg className="h-10 w-10 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path fill="#000" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -18,10 +21,15 @@ const Map = () => {
     html:icon,
   });
 
-  const position = useContext(PositionContext);
+  const ChangeView = ({center, zoom}) => {
+    const map = useMap();
+    map.setView(center, zoom);
+    return null;
+  }
 
   return (
-    <MapContainer center={[-6.1768033,106.822383]} zoom={15} scrollWheelZoom={true} zoomControl={false} className="w-screen z-0 h-screen">
+    <MapContainer center={[-6.1768033,106.822383] } zoom={15} scrollWheelZoom={true} zoomControl={false} className="w-screen z-0 h-screen">
+        {position.selectedData !== null ? (<ChangeView zoom={20} center={[position.selectedData.location.lat, position.selectedData.location.lng]}/>) :  ''}
         <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
@@ -46,6 +54,6 @@ const Map = () => {
         ) : ''}
     </MapContainer>
   )
-}
+})
 
 export default Map
