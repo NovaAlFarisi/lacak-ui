@@ -11,6 +11,8 @@
     "autoprefixer": "^10.1.0",
     "leaflet": "^1.7.1",
     "leaflet-defaulticon-compatibility": "^0.1.1",
+    "mobx": "^6.0.4",
+    "mobx-react": "^7.0.5",
     "next": "10.0.3",
     "postcss": "^8.2.1",
     "react": "17.0.1",

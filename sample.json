@@ -1,0 +1,30 @@
+[
+    {
+        "type": "truck",
+        "serial": "A 4555 L",
+        "name":"Truck Fuso",
+        "status": 1,
+        "location":{
+            "lat":-6.1768033,
+            "lng":106.822383
+        }
+    },{
+        "type": "sedan",
+        "serial": "A 4222 S",
+        "name":"Civic",
+        "status": 1,
+        "location":{
+            "lat":-6.1568033,
+            "lng":106.822383
+        }
+    },{
+        "type": "minibus",
+        "serial": "A 4512 L",
+        "name":"Grandmax",
+        "status": 1,
+        "location":{
+            "lat":-6.1968033,
+            "lng":106.822383
+        }
+    }
+]
